@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.kurtloong.entrybuffer.mapper.TurnoverMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.kurtloong.entrybuffer.domain.Turnover">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="accountId" column="account_id" jdbcType="VARCHAR"/>
+        <result property="turnoverUid" column="turnover_uid" jdbcType="VARCHAR"/>
+        <result property="turnoverType" column="turnover_type" jdbcType="BOOLEAN"/>
+        <result property="turnoverVersion" column="turnover_version" jdbcType="INTEGER"/>
+        <result property="beforeBalance" column="before_balance" jdbcType="DECIMAL"/>
+        <result property="amount" column="amount" jdbcType="DECIMAL"/>
+        <result property="afterBalance" column="after_balance" jdbcType="DECIMAL"/>
+        <result property="turnoverStatus" column="turnover_status" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,account_id,turnover_uid,
+        turnover_type,turnover_version,before_balance,
+        amount,after_balance,turnover_status,
+        update_time,create_time
+    </sql>
+
+    <sql id="Insert_Column_List">
+        account_id,turnover_uid,
+        turnover_type,turnover_version,before_balance,
+        amount,after_balance,turnover_status
+    </sql>
+    <insert id="insertAll" parameterType="com.github.kurtloong.entrybuffer.domain.Turnover">
+        insert into turnover (<include refid="Insert_Column_List"/>) values
+        (#{turnover.accountId},#{turnover.turnoverUid},#{turnover.turnoverType},#{turnover.turnoverVersion},#{turnover.beforeBalance},#{turnover.amount},#{turnover.afterBalance},#{turnover.turnoverStatus})
+    </insert>
+    <select id="selectTurnoverVersionByAccountId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        select turnover_version from turnover  where account_id = #{accountId} lock in share mode order by turnover_version desc limit 1 lock in share mode
+
+    </select>
+</mapper>

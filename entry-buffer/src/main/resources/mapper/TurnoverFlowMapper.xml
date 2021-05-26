@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.kurtloong.entrybuffer.mapper.TurnoverFlowMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.kurtloong.entrybuffer.domain.TurnoverFlow">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="turnoverUid" column="turnover_uid" jdbcType="VARCHAR"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="accountId" column="account_id" jdbcType="VARCHAR"/>
+            <result property="turnoverType" column="turnover_type" jdbcType="INTEGER"/>
+            <result property="turnoverFlowStatus" column="turnover_flow_status" jdbcType="BOOLEAN"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,turnover_uid,amount,
+        account_id,turnover_type,turnover_flow_status,
+        create_time,update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from turnover_flow
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from turnover_flow
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.github.kurtloong.entrybuffer.domain.TurnoverFlow" useGeneratedKeys="true">
+        insert into turnover_flow
+        ( id,turnover_uid,amount
+        ,account_id,turnover_type,turnover_flow_status
+        ,create_time,update_time)
+        values (#{id,jdbcType=INTEGER},#{turnoverUid,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL}
+        ,#{accountId,jdbcType=VARCHAR},#{turnoverType,jdbcType=INTEGER},#{turnoverFlowStatus,jdbcType=BOOLEAN}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}))
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.github.kurtloong.entrybuffer.domain.TurnoverFlow" useGeneratedKeys="true">
+        insert into turnover_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="turnoverUid != null">turnoverUid,</if>
+                <if test="amount != null">amount,</if>
+                <if test="accountId != null">accountId,</if>
+                <if test="turnoverType != null">turnoverType,</if>
+                <if test="turnoverFlowStatus != null">turnoverFlowStatus,</if>
+                <if test="createTime != null">createTime,</if>
+                <if test="updateTime != null">updateTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
+                <if test="turnoverUid != null">turnover_uid = #{turnoverUid,jdbcType=VARCHAR},</if>
+                <if test="amount != null">amount = #{amount,jdbcType=DECIMAL},</if>
+                <if test="accountId != null">account_id = #{accountId,jdbcType=VARCHAR},</if>
+                <if test="turnoverType != null">turnover_type = #{turnoverType,jdbcType=INTEGER},</if>
+                <if test="turnoverFlowStatus != null">turnover_flow_status = #{turnoverFlowStatus,jdbcType=BOOLEAN},</if>
+                <if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.github.kurtloong.entrybuffer.domain.TurnoverFlow">
+        update turnover_flow
+        <set>
+                <if test="turnoverUid != null">
+                    turnover_uid = #{turnoverUid,jdbcType=VARCHAR},
+                </if>
+                <if test="amount != null">
+                    amount = #{amount,jdbcType=DECIMAL},
+                </if>
+                <if test="accountId != null">
+                    account_id = #{accountId,jdbcType=VARCHAR},
+                </if>
+                <if test="turnoverType != null">
+                    turnover_type = #{turnoverType,jdbcType=INTEGER},
+                </if>
+                <if test="turnoverFlowStatus != null">
+                    turnover_flow_status = #{turnoverFlowStatus,jdbcType=BOOLEAN},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.github.kurtloong.entrybuffer.domain.TurnoverFlow">
+        update turnover_flow
+        set 
+            turnover_uid =  #{turnoverUid,jdbcType=VARCHAR},
+            amount =  #{amount,jdbcType=DECIMAL},
+            account_id =  #{accountId,jdbcType=VARCHAR},
+            turnover_type =  #{turnoverType,jdbcType=INTEGER},
+            turnover_flow_status =  #{turnoverFlowStatus,jdbcType=BOOLEAN},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>

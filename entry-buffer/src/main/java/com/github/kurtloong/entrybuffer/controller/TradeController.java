@@ -30,4 +30,9 @@ public class TradeController {
         tradeHandler.rechargeProcess(turnoverUid,accountId,amount);
     }
 
+    @PostMapping("/transferAccountsProcess")
+    public void transferAccountsProcess(@RequestParam("turnoverUid") String turnoverUid,@RequestParam("deductionAccount") String deductionAccount,@RequestParam("rechargeAccount") String rechargeAccount, @RequestParam("amount")BigDecimal amount){
+        tradeHandler.transferAccountsProcess(turnoverUid,deductionAccount,rechargeAccount,amount);
+    }
+
 }

@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
+import static com.github.kurtloong.entrybuffer.util.TableUtil.getTableName;
+
 /**
  * @author kurt.loong
  * @version 1.0
@@ -52,7 +54,7 @@ public class EntryBufferTradeHandler extends TradeHandler {
         redisUtil.zAdd(HOT_ACCOUNT_TURNOVER, accountId, System.currentTimeMillis());
 
         if (!redisUtil.hasKey(accountId)) {
-            BigDecimal balance = balanceMapper.getBalanceByAccountId(accountId);
+            BigDecimal balance = balanceMapper.getBalanceByAccountId(accountId,getTableName(accountId));
             redisUtil.set(accountId, balance.multiply(MULTIPLE).toPlainString());
         }
 

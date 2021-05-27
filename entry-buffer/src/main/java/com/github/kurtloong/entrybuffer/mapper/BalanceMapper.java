@@ -19,7 +19,12 @@ public interface BalanceMapper {
      * @param accountId 账户id
      * @return 余额
      */
-    BigDecimal getBalanceByAccountId(String accountId);
+    BigDecimal getBalanceByAccountId(String accountId,String tableName);
+
+    void updateBalanceByAccount(String accountId,String tableName,BigDecimal balance);
+
+
+
 }
 
 

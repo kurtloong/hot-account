@@ -35,9 +35,14 @@
         insert into turnover (<include refid="Insert_Column_List"/>) values
         (#{turnover.accountId},#{turnover.turnoverUid},#{turnover.turnoverType},#{turnover.turnoverVersion},#{turnover.beforeBalance},#{turnover.amount},#{turnover.afterBalance},#{turnover.turnoverStatus})
     </insert>
+    <update id="updateTurnoverStatusById">
+        update  turnover set turnover_status = #{status} where id = #{id}
+
+
+    </update>
     <select id="selectTurnoverVersionByAccountId" resultType="java.lang.Integer"
             parameterType="java.lang.String">
-        select turnover_version from turnover  where account_id = #{accountId} lock in share mode order by turnover_version desc limit 1 lock in share mode
+        select turnover_version from turnover  where account_id = #{accountId}  order by turnover_version desc limit 1 lock in share mode
 
     </select>
 </mapper>

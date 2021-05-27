@@ -16,7 +16,11 @@
         id,account_id,balance,
         create_time,update_time
     </sql>
+    <update id="updateBalanceByAccount">
+        update #{tableName} set balance = #{balance} where account_id = #{accountId}
+
+    </update>
     <select id="getBalanceByAccountId" resultType="java.math.BigDecimal" parameterType="java.lang.String">
-        select balance from balance where account_id = #{accountId} lock in share mode
+        select balance from #{tableName} where account_id = #{accountId} lock in share mode
     </select>
 </mapper>

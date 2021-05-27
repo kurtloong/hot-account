@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author kurt.loong
@@ -34,10 +35,19 @@ public class TurnoverFlowScheduled {
 
 
 
-    @Scheduled()
-    public void process(){
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void process() throws InterruptedException {
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+
         Set<ZSetOperations.TypedTuple<String>> sets = redisUtil.zRangeWithScores(HOT_ACCOUNT_TURNOVER,0,-1);
         List<ZSetOperations.TypedTuple<String>> typedTuples = Lists.newArrayList(sets);
+
+        // 提交可分解的PrintTask任务
+        forkJoinPool.submit(new TurnoverFlowTask(typedTuples));
+        //阻塞当前线程直到 ForkJoinPool 中所有的任务都执行结束
+        forkJoinPool.awaitTermination(10, TimeUnit.SECONDS);
+
+        forkJoinPool.shutdown();
     }
 
 

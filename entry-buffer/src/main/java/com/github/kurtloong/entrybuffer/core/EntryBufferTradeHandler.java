@@ -55,10 +55,10 @@ public class EntryBufferTradeHandler extends TradeHandler {
 
         if (!redisUtil.hasKey(accountId)) {
             BigDecimal balance = balanceMapper.getBalanceByAccountId(accountId,getTableName(accountId));
-            redisUtil.set(accountId, balance.multiply(MULTIPLE).toPlainString());
+            redisUtil.set(accountId, String.valueOf(balance.multiply(MULTIPLE).intValue()));
         }
 
-        redisUtil.incrBy(accountId,BigDecimal.ZERO.subtract(amount.multiply(MULTIPLE)).intValue());
+        redisUtil.incrBy(accountId,BigDecimal.ZERO.subtract(amount.multiply(MULTIPLE)).longValue());
 
         int result = Integer.parseInt(redisUtil.get(accountId));
 

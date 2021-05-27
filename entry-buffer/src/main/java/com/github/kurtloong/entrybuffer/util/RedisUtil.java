@@ -1,5 +1,6 @@
 package com.github.kurtloong.entrybuffer.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.ScanOptions;
@@ -22,15 +23,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisUtil {
+
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
-    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
-    public StringRedisTemplate getRedisTemplate() {
-        return this.redisTemplate;
-    }
 
     /** -------------------key相关操作--------------------- */
 

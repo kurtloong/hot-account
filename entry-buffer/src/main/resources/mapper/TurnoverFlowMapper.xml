@@ -49,20 +49,20 @@
         , create_time, update_time)
         values ( #{id,jdbcType=INTEGER}, #{turnoverUid,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}
                , #{accountId,jdbcType=VARCHAR}, #{turnoverType,jdbcType=INTEGER}, #{turnoverFlowStatus,jdbcType=BOOLEAN}
-               , #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}) )
+               , #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id"
             parameterType="com.github.kurtloong.entrybuffer.domain.TurnoverFlow" useGeneratedKeys="true">
         insert into turnover_flow
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="turnoverUid != null">turnoverUid,</if>
+            <if test="turnoverUid != null">turnover_uid,</if>
             <if test="amount != null">amount,</if>
-            <if test="accountId != null">accountId,</if>
-            <if test="turnoverType != null">turnoverType,</if>
-            <if test="turnoverFlowStatus != null">turnoverFlowStatus,</if>
-            <if test="createTime != null">createTime,</if>
-            <if test="updateTime != null">updateTime,</if>
+            <if test="accountId != null">account_id,</if>
+            <if test="turnoverType != null">turnover_type,</if>
+            <if test="turnoverFlowStatus != null">turnover_flow_status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">id = #{id,jdbcType=INTEGER},</if>

@@ -4,7 +4,7 @@ spring:
   redis:
     database: 0
     password: jxsdRJ102
-    host: r-bp1e76a76c0d6e14pd.redis.rds.aliyuncs.com
+    host: localhost
     port: 6379
   jackson:
     date-format: yyyy-MM-dd HH:mm
@@ -12,7 +12,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://rm-bp19843jlad2ru8ei3o.mysql.rds.aliyuncs.com/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: lolita
     password: jxsdRJ102
     # Hikari 连接池配置

@@ -1,15 +1,12 @@
 package com.github.kurtloong.entrybuffer.scheduled;
 
-import com.github.kurtloong.entrybuffer.domain.Balance;
 import com.github.kurtloong.entrybuffer.domain.Turnover;
 import com.github.kurtloong.entrybuffer.domain.TurnoverFlow;
 import com.github.kurtloong.entrybuffer.mapper.BalanceMapper;
 import com.github.kurtloong.entrybuffer.mapper.TurnoverFlowMapper;
 import com.github.kurtloong.entrybuffer.mapper.TurnoverMapper;
 import com.github.kurtloong.entrybuffer.util.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 

@@ -7,6 +7,12 @@ package com.github.kurtloong.entrybuffer.util;
  */
 public class TableUtil {
 
+    /**
+     * 暂时写死代替
+     *
+     * @param accountId the account id
+     * @return the string
+     */
     public static String getTableName(String accountId){
         switch (accountId){
             case "ACCOUNT2":

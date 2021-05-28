@@ -16,9 +16,11 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * The type Turnover flow scheduled.
+ *
  * @author kurt.loong
  * @version 1.0
- * @date 2021/5/26 16:38
+ * @date 2021 /5/26 16:38
  */
 @Component
 @Slf4j
@@ -28,13 +30,21 @@ public class TurnoverFlowScheduled {
     private static final String HOT_ACCOUNT_TURNOVER = "hot_account_turnover_flow";
 
 
-
+    /**
+     * Instantiates a new Turnover flow scheduled.
+     *
+     * @param redisUtil the redis util
+     */
     public TurnoverFlowScheduled(RedisUtil redisUtil) {
         this.redisUtil = redisUtil;
     }
 
 
-
+    /**
+     * 定时入账
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void process() throws InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();

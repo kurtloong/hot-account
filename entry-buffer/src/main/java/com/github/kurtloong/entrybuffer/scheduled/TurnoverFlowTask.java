@@ -21,9 +21,11 @@ import java.util.concurrent.RecursiveAction;
 import static com.github.kurtloong.entrybuffer.util.TableUtil.getTableName;
 
 /**
+ * 分治任务
+ *
  * @author kurt.loong
  * @version 1.0
- * @date 2021/5/26 19:36
+ * @date 2021 /5/26 19:36
  */
 public class TurnoverFlowTask extends RecursiveAction {
 
@@ -50,13 +52,18 @@ public class TurnoverFlowTask extends RecursiveAction {
 
     private final List<ZSetOperations.TypedTuple<String>> sets;
 
+    /**
+     * Instantiates a new Turnover flow task.
+     *
+     * @param sets the sets
+     */
     public TurnoverFlowTask(List<ZSetOperations.TypedTuple<String>> sets) {
         this.sets = sets;
     }
 
 
     /**
-     * The main computation performed by this task.
+     * 把流水表中的流水 提交到明细表中 并且更新余额
      */
     @Override
     protected void compute() {
@@ -89,6 +96,12 @@ public class TurnoverFlowTask extends RecursiveAction {
             right.fork();
         }
     }
+
+    /**
+     * 合成一个事务
+     *
+     * @param turnoverFlow the turnover flow
+     */
     @Transactional(rollbackFor = Exception.class)
     public void transaction(TurnoverFlow turnoverFlow){
         Turnover turnover = new Turnover();

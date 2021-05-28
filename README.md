@@ -85,3 +85,100 @@
 
 
 ```
+
+## 建表语句
+
+```sql
+
+create table demo.account1
+(
+	id int auto_increment
+		primary key,
+	account_id varchar(32) not null comment '账户',
+	username varchar(16) not null comment '名称',
+	create_time datetime null,
+	update_time datetime null
+);
+
+create index idx_account_id
+	on demo.account1 (account_id);
+
+
+create table demo.account2
+(
+	id int auto_increment
+		primary key,
+	account_id varchar(32) not null comment '账户',
+	username varchar(16) not null comment '名称',
+	create_time datetime null,
+	update_time datetime null
+);
+
+create index idx_account_id
+	on demo.account2 (account_id);
+
+
+create table demo.balance1
+(
+	id int auto_increment
+		primary key,
+	account_id varchar(32) null comment '账户',
+	balance decimal(10,2) null comment '余额',
+	create_time datetime null,
+	update_time datetime null
+);
+
+create index idx_account_id
+	on demo.balance1 (account_id);
+
+create table demo.balance2
+(
+	id int auto_increment
+		primary key,
+	account_id varchar(32) null comment '账户',
+	balance decimal(10,2) null comment '余额',
+	create_time datetime null,
+	update_time datetime null
+);
+
+create index idx_account_id
+	on demo.balance2 (account_id);
+
+create table demo.turnover
+(
+	id int auto_increment
+		primary key,
+	turnover_uid varchar(64) not null comment '上游产生的流水号',
+	account_id varchar(32) not null comment '发生交易的账户',
+	turnover_type tinyint(1) default 0 not null comment '0入账 1出账',
+	turnover_version int null comment '版本号 -链式设计',
+	before_balance decimal(10,2) not null comment '流水发生之前的余额',
+	amount decimal(10,2) not null comment '发生交易的金额',
+	after_balance decimal(10,2) not null comment '发生流水之后的金额',
+	turnover_status tinyint(1) default 0 not null comment '回滚字段',
+	update_time datetime null,
+	create_time datetime null,
+	constraint uk_turnover_uid_account_id
+		unique (turnover_uid, account_id)
+)
+comment '流水明细表';
+
+create table demo.turnover_flow
+(
+	id int auto_increment
+		primary key,
+	turnover_uid varchar(32) not null comment '流水uid',
+	amount decimal(10,2) null comment '发生交易的金额',
+	account_id varchar(32) not null comment '账户id',
+	turnover_type int(1) not null comment '0-入账 1-出账',
+	turnover_flow_status tinyint(1) default 0 null comment '是否入账 0-未入账 1-已入账',
+	create_time datetime null,
+	update_time datetime null,
+	constraint uk_uid_id
+		unique (turnover_uid, account_id)
+)
+comment '流水表';
+
+
+
+```

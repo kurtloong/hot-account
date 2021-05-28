@@ -8,7 +8,7 @@ package com.github.kurtloong.entrybuffer.util;
 public class TableUtil {
 
     /**
-     * 暂时写死代替
+     * 暂时写死代替 实际上这里应该选择具体的分表算法
      *
      * @param accountId the account id
      * @return the string

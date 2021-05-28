@@ -24,6 +24,13 @@ public interface BalanceMapper {
 
     void updateBalanceByAccount(String accountId,String tableName,BigDecimal balance);
 
+    /**
+     * 添加了共享读锁
+     *
+     * @param accountId the account id
+     * @param tableName the table name
+     * @return the balance
+     */
     BigDecimal getBalance(@Param("accountId") String accountId, @Param("tableName") String tableName);
 
 }

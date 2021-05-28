@@ -58,10 +58,11 @@ public class EntryBufferTradeHandler extends TradeHandler {
             redisUtil.set(accountId, String.valueOf(balance.multiply(MULTIPLE).intValue()));
         }
 
-        redisUtil.incrBy(accountId,BigDecimal.ZERO.subtract(amount.multiply(MULTIPLE)).longValue());
 
-        int result = Integer.parseInt(redisUtil.get(accountId));
+        //原子操作
+        int result = redisUtil.incrBy(accountId,BigDecimal.ZERO.subtract(amount.multiply(MULTIPLE)).longValue()).intValue();
 
+        //结果小于0 证明不足抵扣 减扣失败
         if (result<0) {
             return false;
         }

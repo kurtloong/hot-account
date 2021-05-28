@@ -71,6 +71,7 @@ public class TurnoverFlowTask extends RecursiveAction {
         }
 
         if (size < THRESHOLD) {
+            //对每个账户进行汇总入账
             this.sets.forEach(stringTypedTuple -> {
                 String accountId = stringTypedTuple.getValue();
                 double timestamp = stringTypedTuple.getScore();
@@ -82,11 +83,16 @@ public class TurnoverFlowTask extends RecursiveAction {
                     }
                     return;
                 }
+                //处理每一条流水
                 flowList.forEach(this::transaction);
-
+                //如果缓存余额为负数 更新缓存余额
+                if (redisUtil.get(accountId)!= null && Integer.parseInt(redisUtil.get(accountId))<0){
+                    redisUtil.set(accountId,balanceMapper.getBalanceByAccountId(accountId, getTableName(accountId)).multiply(MULTIPLE).toPlainString());
+                }
             });
 
         } else {
+            //递归
             TurnoverFlowTask left = new TurnoverFlowTask(this.sets.subList(0, size / 2));
             left.fork();
             TurnoverFlowTask right = new TurnoverFlowTask(this.sets.subList(size / 2 + 1, size));
@@ -106,7 +112,7 @@ public class TurnoverFlowTask extends RecursiveAction {
         turnover.setAccountId(turnoverFlow.getAccountId());
         turnover.setAmount(turnoverFlow.getAmount());
         turnover.setTurnoverType(turnoverFlow.getTurnoverType());
-
+        //获取版本号
         if (!redisUtil.hasKey(VERSION)){
             Integer version = turnoverMapper.selectTurnoverVersionByAccountId(turnoverFlow.getAccountId());
             redisUtil.set(turnoverFlow.getAccountId()+VERSION,version == null? "0":String.valueOf(version));
@@ -124,10 +130,6 @@ public class TurnoverFlowTask extends RecursiveAction {
         balanceMapper.updateBalanceByAccount(turnover.getAccountId(), getTableName(turnover.getAccountId()),beforeAmount);
         turnoverFlow.setTurnoverFlowStatus(true);
         flowMapper.updateByPrimaryKey(turnoverFlow);
-
-        if (turnover.getTurnoverType() == 0){
-            redisUtil.incrBy(turnover.getAccountId(), turnover.getAmount().multiply(MULTIPLE).longValue());
-        }
 
 
     }

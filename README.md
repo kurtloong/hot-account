@@ -4,6 +4,7 @@
 
 进阶：当某一账户并发更新比较高时给数据库带来很大压力，如何应对这种热点账户问题。
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ed7acd9f639e4eafb746789be644308e)](https://app.codacy.com/gh/kurtloong/hot-account?utm_source=github.com&utm_medium=referral&utm_content=kurtloong/hot-account&utm_campaign=Badge_Grade_Settings)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cb5385f3291e4364967d1a03e7d58341)](https://www.codacy.com/gh/kurtloong/hot-account/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kurtloong/hot-account&amp;utm_campaign=Badge_Grade)
 
 ## 项目结构
